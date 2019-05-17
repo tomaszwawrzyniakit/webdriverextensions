@@ -113,11 +113,8 @@ public class WebDriverExtensionFieldDecorator extends DefaultFieldDecorator {
     }
 
     private boolean isDecoratableWebComponent(Field field) {
-        if (!WebComponent.class.isAssignableFrom(field.getType())) {
-            return false;
-        }
+        return WebComponent.class.isAssignableFrom(field.getType());
 
-        return true;
     }
 
     private boolean isDecoratableWebComponentList(Field field) {
@@ -158,27 +155,18 @@ public class WebDriverExtensionFieldDecorator extends DefaultFieldDecorator {
     }
 
     private boolean isDecoratablePageObject(Field field) {
-        if (!WebPage.class.isAssignableFrom(field.getType())) {
-            return false;
-        }
+        return WebPage.class.isAssignableFrom(field.getType());
 
-        return true;
     }
 
     private boolean isDecoratableSiteObject(Field field) {
-        if (!WebSite.class.isAssignableFrom(field.getType())) {
-            return false;
-        }
+        return WebSite.class.isAssignableFrom(field.getType());
 
-        return true;
     }
 
     private boolean isDecoratableRepositoryObject(Field field) {
-        if (!WebRepository.class.isAssignableFrom(field.getType())) {
-            return false;
-        }
+        return WebRepository.class.isAssignableFrom(field.getType());
 
-        return true;
     }
 
     private Object decorateWebComponent(ClassLoader loader, Field field, ParameterizedType genericTypeArguments) {

@@ -33,7 +33,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import javax.imageio.ImageIO;
 
@@ -254,7 +253,7 @@ public class Bot {
     }
 
     public static void waitForElementsToDisplay(List<? extends WebElement> webElements) {
-        waitForElementsToDisplay((List<WebElement>) webElements, 30);
+        waitForElementsToDisplay(webElements, 30);
     }
 
     public static void waitForElementsToDisplay(List<? extends WebElement> webElements, long secondsToWait) {
@@ -275,7 +274,7 @@ public class Bot {
     }
 
     public static void waitUntil(Predicate<WebDriver> predicate, long secondsToWait) {
-        new WebDriverWait(driver(), secondsToWait).until(webDriver -> predicate.test(webDriver));
+        new WebDriverWait(driver(), secondsToWait).until(predicate::test);
     }
 
 
@@ -326,9 +325,7 @@ public class Bot {
     }
 
     public static void waitForNewTabToOpen(Set<String> oldWindowHandles, int seconds) {
-        new WebDriverWait(driver(), seconds).until((WebDriver) -> {
-            return availableWindowHandles().size() > oldWindowHandles.size();
-        });
+        new WebDriverWait(driver(), seconds).until((WebDriver) -> availableWindowHandles().size() > oldWindowHandles.size());
     }
 
     public static void waitForPageToLoad() {
@@ -337,10 +334,8 @@ public class Bot {
 
     public static void waitForPageToLoad(int seconds) {
         try {
-            new WebDriverWait(driver(), seconds).until((WebDriver) -> {
-                return String.valueOf(executeJavascript("return document.readyState"))
-                        .equals("complete");
-            });
+            new WebDriverWait(driver(), seconds).until((WebDriver) -> String.valueOf(executeJavascript("return document.readyState"))
+                    .equals("complete"));
         } catch (TimeoutException ex) {
             // don't throw if page is still loading. Some pages never
             // archive readyState == complete, but are functionaly correct
@@ -622,7 +617,7 @@ public class Bot {
         // scroll through whole page to render all it's content
         int lastHeight = 0;
         while (lastHeight != BotUtils.renderedPageHeight()) {
-            lastHeight = (int) BotUtils.renderedPageHeight();
+            lastHeight = BotUtils.renderedPageHeight();
             executeJavascript("window.scrollBy(0," + windowSize.height + ")");
             waitForPageToLoad(); // doesn't wait for rendering for some reason
             waitFor(0.5, TimeUnit.SECONDS); // simple hard coded wait will work in most cases
@@ -2846,7 +2841,7 @@ public class Bot {
 
 
     /* Hamcrest */
-    public static <T extends Object> boolean is(T actual, Matcher<? super T> matcher) {
+    public static <T> boolean is(T actual, Matcher<? super T> matcher) {
         try {
             assertThat(actual, matcher);
             return true;
@@ -2855,11 +2850,11 @@ public class Bot {
         }
     }
 
-    public static <T extends Object> void assertThat(T actual, Matcher<? super T> matcher) {
+    public static <T> void assertThat(T actual, Matcher<? super T> matcher) {
         MatcherAssert.assertThat(actual, matcher);
     }
 
-    public static <T extends Object> void assertThat(String reason, T actual, Matcher<? super T> matcher) {
+    public static <T> void assertThat(String reason, T actual, Matcher<? super T> matcher) {
         MatcherAssert.assertThat(reason, actual, matcher);
     }
 }

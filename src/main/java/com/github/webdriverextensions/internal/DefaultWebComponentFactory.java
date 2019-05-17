@@ -12,7 +12,7 @@ public class DefaultWebComponentFactory implements WebComponentFactory {
 
     private <T extends WebComponent> T createInstanceOf(final Class<T> webComponentClass, final WebElement webElement) {
         try {
-            T webComponent = (T) webComponentClass.newInstance();
+            T webComponent = webComponentClass.newInstance();
             webComponent.init(webElement);
             return webComponent;
         } catch (IllegalArgumentException|SecurityException|InstantiationException|IllegalAccessException e) {

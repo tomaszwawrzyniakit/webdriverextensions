@@ -40,14 +40,7 @@ public class WebDriverUtils {
         }
 
         final Set<String> keysToRemoveSet = Sets.newHashSet(keysToRemove);
-        capabilities = new DesiredCapabilities(Maps.filterKeys(capabilities.asMap(), new Predicate<String>() {
-            @Override
-            public boolean apply(String key) {
-                return !keysToRemoveSet.contains(key);
-            }
-        }));
-
-        return capabilities;
+        return new DesiredCapabilities(Maps.filterKeys(capabilities.asMap(), key -> !keysToRemoveSet.contains(key)));
     }
 
     public static Capabilities addCapabilities(Capabilities capabilities, Map<String, ?> capabilitiesToAdd) {

@@ -74,7 +74,7 @@ public class ReflectionUtils {
             }
         }
 
-        return annotatedFields.toArray(new Field[annotatedFields.size()]);
+        return annotatedFields.toArray(new Field[0]);
     }
 
     public static Field[] getDeclaredFields(Class clazz) {
@@ -91,6 +91,6 @@ public class ReflectionUtils {
             }
         }
 
-        return fields.toArray(new Field[fields.size()]);
+        return fields.toArray(new Field[0]);
     }
 }

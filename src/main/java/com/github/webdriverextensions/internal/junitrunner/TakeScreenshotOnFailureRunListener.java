@@ -18,7 +18,7 @@ public class TakeScreenshotOnFailureRunListener extends RunListener {
     }
 
     @Override
-    public void testFailure(Failure failure) throws Exception {
+    public void testFailure(Failure failure) {
         String filePath = getScreenshotFilePath(fileName);
         log.trace("Saving test failure screenshot to " + quote(filePath));
         Bot.takeScreenshot(fileName);

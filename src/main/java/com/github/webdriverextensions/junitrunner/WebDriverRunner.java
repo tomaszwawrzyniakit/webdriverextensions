@@ -238,9 +238,7 @@ public class WebDriverRunner extends BlockJUnit4ClassRunner {
     protected List<FrameworkMethod> getTestAnnotatedMethods() {
         List<FrameworkMethod> testAnnotatedMethods = getTestClass().getAnnotatedMethods(Test.class);
         List<FrameworkMethod> testMethods = new ArrayList<>();
-        for (FrameworkMethod testAnnotatedMethod : testAnnotatedMethods) {
-            testMethods.add(testAnnotatedMethod);
-        }
+        testMethods.addAll(testAnnotatedMethods);
         return testMethods;
     }
 
@@ -573,7 +571,7 @@ public class WebDriverRunner extends BlockJUnit4ClassRunner {
                     || annotation.annotationType().equals(IgnoreBrowser.class)) {
                 platform = (String) AnnotationUtils.getValue(annotation, "platform");
             } else {
-                platform = ((Platform) AnnotationUtils.getValue(annotation, "platform")).toString();
+                platform = AnnotationUtils.getValue(annotation, "platform").toString();
             }
 
             Class desiredCapabilitiesClass = (Class) AnnotationUtils.getValue(annotation, "desiredCapabilitiesClass");
@@ -604,7 +602,7 @@ public class WebDriverRunner extends BlockJUnit4ClassRunner {
             return desiredCapabilities;
         }
 
-        private WebDriver createDriver() throws Exception {
+        private WebDriver createDriver() {
             if (BrowserType.CHROME.equalsIgnoreCase(browserName)
                     || BrowserType.GOOGLECHROME.equalsIgnoreCase(browserName)) {
                 if (System.getProperty(WebDriverProperties.CHROME_BINARY_PROPERTY_NAME) != null) {
@@ -655,7 +653,7 @@ public class WebDriverRunner extends BlockJUnit4ClassRunner {
             throw new BrowserNotSupported();
         }
 
-        private WebDriver createDriver(URL url) throws Exception {
+        private WebDriver createDriver(URL url) {
             DesiredCapabilities finalDesiredCapabilities = new DesiredCapabilities(desiredCapabilities);
             finalDesiredCapabilities.setBrowserName(browserName);
             finalDesiredCapabilities.setVersion(version);

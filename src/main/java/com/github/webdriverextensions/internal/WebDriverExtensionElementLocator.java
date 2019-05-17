@@ -57,10 +57,7 @@ public class WebDriverExtensionElementLocator implements ElementLocator {
     }
 
     private boolean hasAnnotatedResetSearchContext(Field field) {
-        ResetSearchContext annotation = (ResetSearchContext) field.getAnnotation(ResetSearchContext.class);
-        if (annotation != null) {
-            return true;
-        }
-        return false;
+        ResetSearchContext annotation = field.getAnnotation(ResetSearchContext.class);
+        return annotation != null;
     }
 }

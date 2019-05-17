@@ -4,8 +4,6 @@ import com.github.webdriverextensions.WebComponent;
 import com.github.webdriverextensions.annotations.Delegate;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
-import org.openqa.selenium.support.How;
 
 public class Menu extends WebComponent {
 
